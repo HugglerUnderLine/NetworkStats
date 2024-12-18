@@ -34,7 +34,7 @@
                  id="planta-image" style="max-height: 70vh; width: 100%; height: auto; display: block; object-fit: contain;" />
 
             <!-- Contêiner do Heatmap, posicionado sobre a imagem e ocupando 100% da imagem -->
-            <div id="heatmap" class="position-absolute top-0 start-0 w-100 h-100" style="pointer-events: none;"></div>
+            <div id="heatmap" class="position-absolute top-0 start-0 w-100 h-100" style="pointer-events: none; margin-left:650px"></div>
         </div>
     </div>
 </section>
@@ -401,27 +401,49 @@
     $('#limpar').click(() => { $('#filtro_analise')[0].reset(); table.ajax.reload(); });
 
     document.addEventListener("DOMContentLoaded", function () {
-        var heatmapInstance = h337.create({
-            container: document.getElementById("heatmap"),
-            radius: 50,
-            maxOpacity: 0.5,
-            blur: 0.75,
-            backgroundColor: 'rgba(0, 0, 0, 0)',
-        });
-
-        var heatmapData = {
-            max: 5,
-            data: [
-                { x: 150, y: 120, value: 4 }, 
-                { x: 300, y: 200, value: 5 },
-                { x: 450, y: 250, value: 3 },
-                { x: 350, y: 400, value: 4 },
-                { x: 200, y: 350, value: 2 },
-            ]
-        };
-
-        heatmapInstance.setData(heatmapData);
+    // Cria o heatmap
+    var heatmapInstance = h337.create({
+        container: document.getElementById("heatmap"),
+        radius: 50,
+        maxOpacity: 0.5,
+        blur: 0.75,
+        backgroundColor: 'rgba(0, 0, 0, 0)',  // Deixe o fundo transparente
     });
+
+    // Dados com coordenadas relativas aos cômodos
+    var heatmapData = {
+        max: 5,  // Valor máximo (você pode ajustar conforme a necessidade)
+        data: [
+            // Cada coordenada (x, y) é relativa à posição da planta na imagem
+            { x: 150, y: 120, value: 4, comodo: 'Cômodo 1' },
+            { x: 300, y: 100, value: 5, comodo: 'Cômodo 2' },
+            { x: 450, y: 150, value: 3, comodo: 'Cômodo 3' },
+            { x: 200, y: 350, value: 2, comodo: 'Cômodo 4' },
+            { x: 400, y: 320, value: 4, comodo: 'Cômodo 5' },
+            { x: 200, y: 600, value: 4, comodo: 'Cômodo 6' },
+            { x: 400, y: 600, value: 2, comodo: 'Cômodo 7' },
+        ]
+    };
+
+    // Atualiza os dados no heatmap
+    heatmapInstance.setData(heatmapData);
+
+    // Adiciona um título ou tooltip com o nome do cômodo
+    heatmapData.data.forEach(point => {
+        const element = document.createElement('div');
+        element.style.position = 'absolute';
+        element.style.left = `${point.x}px`;  // Correção aqui
+        element.style.top = `${point.y}px`;  // Correção aqui
+        element.style.color = '#fff';
+        element.style.fontSize = '12px';
+        element.style.background = 'rgba(0, 0, 0, 0.5)';
+        element.style.padding = '5px';
+        element.textContent = point.comodo;
+
+        document.getElementById('heatmap').appendChild(element);
+    });
+});
+
 </script>
 
 <?= $this->endSection() ?>
