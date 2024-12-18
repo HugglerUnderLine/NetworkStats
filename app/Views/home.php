@@ -2,6 +2,7 @@
 
 <?= $this->section('more-styles') ?>
 <link rel="stylesheet" href="<?= base_url('assets/DataTables-2.0.3/css/dataTables.bootstrap5.min.css') ?>">
+<link rel="stylesheet" href="/public/assets/css/style.css">
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
@@ -22,23 +23,28 @@
 <!--======================================================================================================================= -->
 <!-- PLANTA -->
 
-<section class="planta-container py-5 vh-100" id="planta" style="background-color: var(--cor-planta);">
-    <div class="container mt-5">
-        <h2 class="text-white mb-4 pt-4">Planta</h2>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="planta-img-container mb-4">
-                    <img src="<?= base_url('assets/img/planta.png') ?>" class="img-fluid rounded" alt="Planta da casa" style="height: 70vh; width: auto;">
-                </div>
-            </div>
-            <div class="col-md-6 d-flex align-items-end">
-                <div class="text-container">
-                    <p class="text-white">Passe o mouse sobre cada cômodo para visualizar as características da rede no local.</p>
-                </div>
-            </div>
+<section class="planta-container py-5 vh-100 d-flex align-items-center justify-content-center" 
+         id="planta" style="background-color: var(--cor-planta);">
+    <div id="heatmap-container" class="position-relative w-100" style="height: 70vh;">
+        <h2 class="text-white text-center mb-4">Planta</h2>
+
+        <!-- Contêiner para imagem e heatmap -->
+        <div class="position-relative w-100 h-100 d-flex justify-content-center align-items-center">
+            <!-- Imagem da planta com tamanho fixo -->
+            <img src="<?= base_url('assets/img/planta.png') ?>" alt="Planta da casa" class="img-fluid rounded" 
+                 id="planta-image" />
+
+            <!-- Contêiner do Heatmap, posicionado sobre a imagem -->
+            <div id="heatmap" class="position-absolute top-0 start-0 w-100 h-100" style="pointer-events: none;"></div>
         </div>
     </div>
 </section>
+
+
+
+
+
+
 
 <!--======================================================================================================================= -->
 <!-- ANÁLISE -->
@@ -151,6 +157,9 @@
 <?= $this->section('more-scripts') ?>
 <!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/heatmap.js@2.0.1/dist/heatmap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/heatmap.js/build/heatmap.min.js"></script>
+
 
 <script src="<?= base_url('assets/DataTables-2.0.3/js/dataTables.min.js') ?>"></script>
 <script src="<?= base_url('assets/DataTables-2.0.3/js/dataTables.bootstrap5.min.js') ?>"></script>
@@ -392,6 +401,29 @@
     // Filtra e carrega os gráficos com os filtros do DataTables
     $('#filtrar').click(() => table.ajax.reload());
     $('#limpar').click(() => { $('#filtro_analise')[0].reset(); table.ajax.reload(); });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var heatmapInstance = h337.create({
+            container: document.getElementById("heatmap"),
+            radius: 50,
+            maxOpacity: 0.5,
+            blur: 0.75,
+            backgroundColor: 'rgba(0, 0, 0, 0)',
+        });
+
+        var heatmapData = {
+            max: 5,
+            data: [
+                { x: 150, y: 120, value: 4 }, 
+                { x: 300, y: 200, value: 5 },
+                { x: 450, y: 250, value: 3 },
+                { x: 350, y: 400, value: 4 },
+                { x: 200, y: 350, value: 2 },
+            ]
+        };
+
+        heatmapInstance.setData(heatmapData);
+    });
 </script>
 
 <?= $this->endSection() ?>
