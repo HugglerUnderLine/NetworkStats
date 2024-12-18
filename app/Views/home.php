@@ -2,7 +2,6 @@
 
 <?= $this->section('more-styles') ?>
 <link rel="stylesheet" href="<?= base_url('assets/DataTables-2.0.3/css/dataTables.bootstrap5.min.css') ?>">
-<link rel="stylesheet" href="/public/assets/css/style.css">
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
@@ -29,17 +28,16 @@
         <h2 class="text-white text-center mb-4">Planta</h2>
 
         <!-- Contêiner para imagem e heatmap -->
-        <div class="position-relative w-100 h-100 d-flex justify-content-center align-items-center">
+        <div class="position-relative w-100 h-100">
             <!-- Imagem da planta com tamanho fixo -->
             <img src="<?= base_url('assets/img/planta.png') ?>" alt="Planta da casa" class="img-fluid rounded" 
-                 id="planta-image" />
+                 id="planta-image" style="max-height: 70vh; width: 100%; height: auto; display: block; object-fit: contain;" />
 
-            <!-- Contêiner do Heatmap, posicionado sobre a imagem -->
+            <!-- Contêiner do Heatmap, posicionado sobre a imagem e ocupando 100% da imagem -->
             <div id="heatmap" class="position-absolute top-0 start-0 w-100 h-100" style="pointer-events: none;"></div>
         </div>
     </div>
 </section>
-
 
 
 
