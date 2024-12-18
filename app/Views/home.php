@@ -26,18 +26,31 @@
          id="planta" style="background-color: var(--cor-planta);">
     <div id="heatmap-container" class="position-relative w-100" style="height: 70vh;">
         <h2 class="text-white text-center mb-4">Planta</h2>
-
-        <!-- Contêiner para imagem e heatmap -->
         <div class="position-relative w-100 h-100">
-            <!-- Imagem da planta com tamanho fixo -->
             <img src="<?= base_url('assets/img/planta.png') ?>" alt="Planta da casa" class="img-fluid rounded" 
-                 id="planta-image" style="max-height: 70vh; width: 100%; height: auto; display: block; object-fit: contain;" />
-
-            <!-- Contêiner do Heatmap, posicionado sobre a imagem e ocupando 100% da imagem -->
-            <div id="heatmap" class="position-absolute top-0 start-0 w-100 h-100" style="pointer-events: none; margin-left:650px"></div>
+                 id="planta-image" style="max-height: 70vh; width: 100%; height: auto; display: block; object-fit: contain; margin-left: 120px;" />
+            <div id="heatmap" class="position-absolute top-0 start-0 w-100 h-100" style="pointer-events: none; margin-left:300px;"></div>
+        </div>
+    </div>
+    <div class="heatmap-legend mt-4 text-white w-100 text-center">
+        <div class="d-flex flex-wrap gap-3">
+            <p class="d-flex align-items-center mb-2 w-100">
+                <span class="color-box" style="display: inline-block; width: 20px; height: 20px; background-color:rgb(11, 238, 23); margin-right: 10px;"></span> 
+                Melhor cobertura de internet, sem muitas interferências ou quase nenhuma.
+            </p>
+            <p class="d-flex align-items-center mb-2 w-100">
+                <span class="color-box" style="display: inline-block; width: 20px; height: 20px; background-color:rgb(243, 18, 18); margin-right: 10px;"></span>
+                Boa cobertura de internet, porém tem interferências de rede, consequentemente internet mais lenta.
+            </p>
+            <p class="d-flex align-items-center mb-2 w-100">
+                <span class="color-box" style="display: inline-block; width: 20px; height: 20px; background-color:rgb(13, 87, 247); margin-right: 10px;"></span> 
+                Cobertura razoável.
+            </p>
         </div>
     </div>
 </section>
+
+
 
 
 
@@ -49,7 +62,7 @@
  
 <section class="analise-container text-white" id="analise" style="background-color: var(--cor-analise); min-height: 100vh; padding-top: 100px;">
     <div class="container mt-5">
-        <h2 class="mb-4">Análise de Rede</h2>
+        <h2 class="mb-4" style="margin-left:100px">Análise de Rede</h2>
     </div>
     <div class="container pt-5 mt-3">
         <form id="filtro_analise" class="mb-4" method="post" accept-charset="utf-8">
@@ -396,7 +409,7 @@
         chartInterferencia.update();
     });
 
-    // Filtra e carrega os gráficos com os filtros do DataTables
+
     $('#filtrar').click(() => table.ajax.reload());
     $('#limpar').click(() => { $('#filtro_analise')[0].reset(); table.ajax.reload(); });
 
@@ -407,33 +420,32 @@
         radius: 50,
         maxOpacity: 0.5,
         blur: 0.75,
-        backgroundColor: 'rgba(0, 0, 0, 0)',  // Deixe o fundo transparente
+        backgroundColor: 'rgba(0, 0, 0, 0)',  
     });
 
-    // Dados com coordenadas relativas aos cômodos
+
     var heatmapData = {
-        max: 5,  // Valor máximo (você pode ajustar conforme a necessidade)
+        max: 5,  
         data: [
-            // Cada coordenada (x, y) é relativa à posição da planta na imagem
-            { x: 150, y: 120, value: 4, comodo: 'Cômodo 1' },
+
+            { x: 150, y: 120, value: 5, comodo: 'Cômodo 1' },
             { x: 300, y: 100, value: 5, comodo: 'Cômodo 2' },
-            { x: 450, y: 150, value: 3, comodo: 'Cômodo 3' },
-            { x: 200, y: 350, value: 2, comodo: 'Cômodo 4' },
+            { x: 450, y: 150, value: 4, comodo: 'Cômodo 3' },
+            { x: 200, y: 350, value: 4, comodo: 'Cômodo 4' },
             { x: 400, y: 320, value: 4, comodo: 'Cômodo 5' },
-            { x: 200, y: 600, value: 4, comodo: 'Cômodo 6' },
-            { x: 400, y: 600, value: 2, comodo: 'Cômodo 7' },
+            { x: 200, y: 600, value: 5, comodo: 'Cômodo 6' },
+            { x: 400, y: 600, value: 5, comodo: 'Cômodo 7' },
         ]
     };
 
-    // Atualiza os dados no heatmap
+
     heatmapInstance.setData(heatmapData);
 
-    // Adiciona um título ou tooltip com o nome do cômodo
     heatmapData.data.forEach(point => {
         const element = document.createElement('div');
         element.style.position = 'absolute';
-        element.style.left = `${point.x}px`;  // Correção aqui
-        element.style.top = `${point.y}px`;  // Correção aqui
+        element.style.left = `${point.x}px`; 
+        element.style.top = `${point.y}px`; 
         element.style.color = '#fff';
         element.style.fontSize = '12px';
         element.style.background = 'rgba(0, 0, 0, 0.5)';
