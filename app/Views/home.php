@@ -24,7 +24,7 @@
 
 <section class="planta-container py-5 vh-100" id="planta" style="background-color: var(--cor-planta);">
     <div class="container mt-5">
-        <h2 class="text-white mb-4 pt-4">Planta</h2>
+        <h2 class="text-white mb-4 pt-4">Planta da Residencia</h2>
         <div class="row">
             <div class="col-md-6">
                 <div class="planta-img-container mb-4">
